@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"seguro.de.veiculos","l":"Apolice"},{"p":"seguro.de.veiculos","l":"ApoliceInvalidaException","k":"13"},{"p":"seguro.de.veiculos","l":"Apolice.Builder"},{"p":"seguro.de.veiculos","l":"SeguroDeVeiculos"}];updateSearchResults();
