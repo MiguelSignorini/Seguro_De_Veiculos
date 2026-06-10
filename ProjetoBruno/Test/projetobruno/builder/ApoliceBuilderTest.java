@@ -77,4 +77,21 @@ public class ApoliceBuilderTest {
         assertFalse("Carro reserva deveria estar inativo",      apolice.isCarroReserva());
         assertFalse("Cobertura de vidros deveria estar inativa",apolice.isCoberturaVidros());
     }
+    // ════════════════════════════════════════════════════════════
+    //  RF033 — CENÁRIO DE EXCEÇÃO
+    //  CPF inválido deve lançar exceção
+    // ════════════════════════════════════════════════════════════
+    /**
+     * RF033 — Builder deve lançar IllegalArgumentException
+     * quando CPF estiver em formato inválido.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void rf033_deveLancarExcecaoComCpfInvalido() {
+        new Apolice.ApoliceBuilder()
+                .nomeCliente("Teste")
+                .cpf("123ABC456")
+                .placa("ABC-1234")
+                .dataVigencia("2099-12-31")
+                .build();
+        }
 }
