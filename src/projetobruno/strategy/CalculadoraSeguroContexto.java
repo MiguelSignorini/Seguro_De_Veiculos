@@ -23,7 +23,7 @@ public class CalculadoraSeguroContexto {
      * @throws IllegalStateException Caso nenhuma estratégia tenha sido definida antes da execução.
      * @return O valor final calculado pela estratégia escolhida.
      */
-    public double ejecutarCalculo(double valorBase, int quantidadeVeiculos, int idadeCondutor) {
+    public double executarCalculo(double valorBase, int quantidadeVeiculos, int idadeCondutor) {
         if (this.estrategia == null) {
             throw new IllegalStateException("Nenhuma estratégia de cálculo foi definida.");
         }
