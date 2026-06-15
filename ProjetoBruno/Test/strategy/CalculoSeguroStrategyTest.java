@@ -33,4 +33,70 @@ public class CalculoSeguroStrategyTest {
         double resultadoEsperado = 1300.0;
         assertEquals(resultadoEsperado, resultadoObtido, 0.001);
     }
+    /**
+ * Testes unitários do padrão Strategy.
+ *S
+ * RF042 - Condutor Experiente
+ * RF043 - Veículo Esportivo
+ *
+ * @author Jonata Vendola
+ * @version 1.0
+ */
+    // ════════════════════════════════════════════════════════════
+    // RF042 — CENÁRIO ALTERNATIVO
+    // Cliente experiente recebe bônus
+    // ════════════════════════════════════════════════════════════
+
+    @Test
+    public void rf042_deveAplicarBonusCondutorExperiente() {
+
+        // Arrange
+        CalculadoraSeguro calculadora = new CalculadoraSeguro();
+
+        calculadora.setStrategy(
+                new CondutorExperienteStrategy()
+        );
+
+        double premioBase = 2000.00;
+
+        // Act
+        double premioFinal =
+                calculadora.calcularPremio(premioBase);
+
+        // Assert
+        assertEquals(
+                1600.00,
+                premioFinal,
+                0.01
+        );
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // RF043 — CENÁRIO ALTERNATIVO
+    // Veículo esportivo possui risco maior
+    // ════════════════════════════════════════════════════════════
+
+    @Test
+    public void rf043_deveAplicarAcrescimoVeiculoEsportivo() {
+
+        // Arrange
+        CalculadoraSeguro calculadora = new CalculadoraSeguro();
+
+        calculadora.setStrategy(
+                new VeiculoEsportivoStrategy()
+        );
+
+        double premioBase = 2000.00;
+
+        // Act
+        double premioFinal =
+                calculadora.calcularPremio(premioBase);
+
+        // Assert
+        assertEquals(
+                2600.00,
+                premioFinal,
+                0.01
+        );
+    }
 }
