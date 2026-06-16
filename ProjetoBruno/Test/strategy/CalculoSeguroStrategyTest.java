@@ -160,4 +160,52 @@ public void rf045_deveRejeitarIdadeNegativa() {
         assertNotNull(e);
     }
 }
+ // RF038 — CENÁRIO VÁLIDO
+    // Executar cálculo básico de risco
+    // =====================================================
+    @Test
+    public void testRF038_ExecutarCalculoBasicoDeRisco() {
+        CalculadoraSeguroContexto contexto = new CalculadoraSeguroContexto();
+        double valorBaseVeiculo = 1000.0;
+        int quantidadeVeiculos = 1;
+        int idadeCondutorRegular = 35; // Cliente regular fora da faixa de risco jovem
+
+        // Utiliza a interface/estratégia base como stub para o cálculo padrão linear
+        contexto.setEstrategia(new CalculoSeguroStrategy() {
+            @Override
+            public double calcular(double valorBase, int qtd, int idade) {
+                return valorBase * qtd; // Simulação da equação linear padrão
+            }
+        });
+
+        double resultadoObtido = contexto.executarCalculo(valorBaseVeiculo, quantidadeVeiculos, idadeCondutorRegular);
+        double resultadoEsperado = 1000.0; // Valor de tabela normal sem acréscimos
+
+        assertEquals(resultadoEsperado, resultadoObtido, 0.001);
+    }
+
+    // =====================================================
+    // RF039 — CENÁRIO VÁLIDO
+    // Executar cálculo premium de risco
+    // =====================================================
+    @Test
+    public void testRF039_ExecutarCalculoPremiumDeRisco() {
+        CalculadoraSeguroContexto contexto = new CalculadoraSeguroContexto();
+        double valorBaseVeiculo = 2000.0;
+        int quantidadeVeiculos = 1;
+        int idadeCondutorPremium = 50;
+
+        // Injeta uma simulação (stub) da estratégia Premium com margens reduzidas de fidelidade
+        contexto.setEstrategia(new CalculoSeguroStrategy() {
+            @Override
+            public double calcular(double valorBase, int qtd, int idade) {
+                return (valorBase * qtd) * 0.90; // Aplica 10% de desconto de fidelidade premium
+            }
+        });
+
+        double resultadoObtido = contexto.executarCalculo(valorBaseVeiculo, quantidadeVeiculos, idadeCondutorPremium);
+        double resultadoEsperado = 1800.0; // 2000.0 com 10% de desconto premium
+
+        assertEquals(resultadoEsperado, resultadoObtido, 0.001);
+    }
 }

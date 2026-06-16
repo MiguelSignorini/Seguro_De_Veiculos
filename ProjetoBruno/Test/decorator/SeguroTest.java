@@ -119,4 +119,22 @@ public class SeguroTest {
                 seguro.getDescricao()
         );
     }
+     @Test
+    public void testRF037_VerificarSomaCorretaMultiplasCoberturas() {
+        // Cenário Válido usando as classes exatas do grupo:
+        Seguro seguroBase = new SeguroBase(); 
+        
+        // Empilhando as coberturas exatamente com os nomes criados pelo grupo
+        Seguro seguroComAssistencia = new Assistencia24(seguroBase); 
+        Seguro seguroComCarroReserva = new CarroReserva(seguroComAssistencia); 
+        Seguro seguroCompleto = new CoberturaVidros(seguroComCarroReserva); 
+        
+        // Dispara a precificação usando o método do padrão Decorator
+        double valorTotalObtido = seguroCompleto.calcularPreco();
+        double valorEsperado = 1400.00; // Ajuste para o valor que a soma deles deve dar
+        
+        // Valida se a soma bate centavo por centavo
+        assertEquals(valorEsperado, valorTotalObtido, 0.001);
+    }
+
 }
