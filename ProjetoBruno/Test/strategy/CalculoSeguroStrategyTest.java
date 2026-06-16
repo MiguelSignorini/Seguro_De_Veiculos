@@ -99,4 +99,65 @@ public class CalculoSeguroStrategyTest {
                 0.01
         );
     }
+
+    // ════════════════════════════════════════════════════════════
+    // RF044 — CENÁRIO DE EXCESSÃO
+    // trata falha ao selecionar estratégia
+    // ════════════════════════════════════════════════════════════
+
+    @Test
+public void rf044_deveImpedirExecucaoSemEstrategiaDefinida() {
+
+    CalculadoraSeguroContexto contexto =
+            new CalculadoraSeguroContexto();
+
+    try {
+
+        contexto.executarCalculo(
+                1000.0,
+                1,
+                30
+        );
+
+        fail("Era esperada uma IllegalStateException.");
+
+    } catch (IllegalStateException e) {
+
+        assertEquals(
+                "Nenhuma estratégia de cálculo foi definida.",
+                e.getMessage()
+        );
+    }
+}
+
+// =====================================================
+// RF045 — CENÁRIO DE EXCEÇÃO
+// idade inválida deve ser rejeitada
+// =====================================================
+
+@Test
+public void rf045_deveRejeitarIdadeNegativa() {
+
+    CalculadoraSeguroContexto contexto =
+            new CalculadoraSeguroContexto();
+
+    contexto.setEstrategia(
+            new EstrategiaCondutorJovem()
+    );
+
+    try {
+
+        contexto.executarCalculo(
+                1000.0,
+                1,
+                -5
+        );
+
+        fail("Era esperada uma IllegalArgumentException.");
+
+    } catch (IllegalArgumentException e) {
+
+        assertNotNull(e);
+    }
+}
 }
